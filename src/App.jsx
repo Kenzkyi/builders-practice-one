@@ -2,7 +2,7 @@ import React, { useReducer } from "react";
 import { IoMdCheckmark } from "react-icons/io";
 
 const initialState = {
-  todos: [],
+  todos: JSON.parse(localStorage.getItem("allTodo")) || [],
   inputValue: "",
 };
 
@@ -20,22 +20,26 @@ const reducer = (state, action) => {
             "This todo already existed, please enter a new one"
           );
           if (newTodo) {
+            const newTodos = [
+              { id: id, todo: newTodo, completed: false },
+              ...state.todos,
+            ];
+            localStorage.setItem("allTodo", JSON.stringify(newTodos));
             return {
               ...state,
-              todos: [
-                { id: id, todo: newTodo, completed: false },
-                ...state.todos,
-              ],
+              todos: newTodos,
               inputValue: "",
             };
           }
         } else {
+          const newTodos = [
+            { id: id, todo: state.inputValue, completed: false },
+            ...state.todos,
+          ];
+          localStorage.setItem("allTodo", JSON.stringify(newTodos));
           return {
             ...state,
-            todos: [
-              { id: id, todo: state.inputValue, completed: false },
-              ...state.todos,
-            ],
+            todos: newTodos,
             inputValue: "",
           };
         }
@@ -45,17 +49,23 @@ const reducer = (state, action) => {
     case "ONCHANGE":
       return { ...state, inputValue: action.payload };
     case "COMPLETED-TODO":
+      const newTodos = state.todos.map((item) =>
+        item.id === action.payload ? { ...item, completed: true } : item
+      );
+      localStorage.setItem("allTodo", JSON.stringify(newTodos));
       return {
         ...state,
-        todos: state.todos.map((item) =>
-          item.id === action.payload ? { ...item, completed: true } : item
-        ),
+        todos: newTodos,
       };
     case "DELETE-TODO":
       if (window.confirm("This would be deleted, are you sure?")) {
+        const newTodos = state.todos.filter(
+          (item) => item.id !== action.payload
+        );
+        localStorage.setItem("allTodo", JSON.stringify(newTodos));
         return {
           ...state,
-          todos: state.todos.filter((item) => item.id !== action.payload),
+          todos: newTodos,
         };
       }
     default:
