@@ -10,7 +10,7 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "ADD-TODO":
       const id = state.todos.length + 1;
-      if (state.inputValue) {
+      if (state.inputValue.trim()) {
         if (
           state.todos.find(
             (item) => item.todo.toLowerCase() === state.inputValue.toLowerCase()
