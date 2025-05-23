@@ -11,14 +11,34 @@ const reducer = (state, action) => {
     case "ADD-TODO":
       const id = state.todos.length + 1;
       if (state.inputValue) {
-        return {
-          ...state,
-          todos: [
-            { id: id, todo: state.inputValue, completed: false },
-            ...state.todos,
-          ],
-          inputValue: "",
-        };
+        if (
+          state.todos.find(
+            (item) => item.todo.toLowerCase() === state.inputValue.toLowerCase()
+          )
+        ) {
+          const newTodo = prompt(
+            "This todo already existed, please enter a new one"
+          );
+          if (newTodo) {
+            return {
+              ...state,
+              todos: [
+                { id: id, todo: newTodo, completed: false },
+                ...state.todos,
+              ],
+              inputValue: "",
+            };
+          }
+        } else {
+          return {
+            ...state,
+            todos: [
+              { id: id, todo: state.inputValue, completed: false },
+              ...state.todos,
+            ],
+            inputValue: "",
+          };
+        }
       } else {
         alert("please enter a todo");
       }
