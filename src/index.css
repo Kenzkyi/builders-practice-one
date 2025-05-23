@@ -113,21 +113,31 @@
       }
 
       p,
-      del {
+      del,
+      input {
         width: 85%;
-      }
-
-      button {
-        height: 10px;
-        width: 10px;
-        font-size: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         outline: none;
         border: none;
-        background: transparent;
-        cursor: pointer;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        button {
+          height: 10px;
+          width: 10px;
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          outline: none;
+          border: none;
+          background: transparent;
+          cursor: pointer;
+          color: red;
+        }
       }
     }
   }
