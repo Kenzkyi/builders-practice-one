@@ -95,7 +95,23 @@ const App = () => {
                       dispatch({ type: "COMPLETED-TODO", payload: item.id })
                     }></aside>
                 )}
-                {item.completed ? <del>{item.todo}</del> : <p>{item.todo}</p>}
+                {item.completed ? (
+                  <del>
+                    {item.todo.length >= 20
+                      ? (
+                          item.todo.charAt(0).toUpperCase() + item.todo.slice(1)
+                        ).substr(0, 30) + " ..."
+                      : item.todo.charAt(0).toUpperCase() + item.todo.slice(1)}
+                  </del>
+                ) : (
+                  <p>
+                    {item.todo.length >= 20
+                      ? (
+                          item.todo.charAt(0).toUpperCase() + item.todo.slice(1)
+                        ).substr(0, 30) + " ..."
+                      : item.todo.charAt(0).toUpperCase() + item.todo.slice(1)}
+                  </p>
+                )}
                 <button
                   onClick={() =>
                     dispatch({ type: "DELETE-TODO", payload: item.id })
