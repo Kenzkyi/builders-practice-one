@@ -190,6 +190,9 @@ const App = () => {
                     )}
                   </section>
                   <button
+                    style={{
+                      display: item.id === state.editTodo.id ? "none" : "flex",
+                    }}
                     onClick={() =>
                       dispatch({ type: "DELETE-TODO", payload: item.id })
                     }>
